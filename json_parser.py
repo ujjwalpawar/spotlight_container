@@ -283,22 +283,6 @@ class parser:
         else:
             return -1
 
-
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['f1u_rlc_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[0,1])
-        return df
-
     # parse mac dl bo update
     def parse_mac_dl_bo_update(self, json_object):
         # self.axes[0,0].set_title('mac_dl_bo_update')
@@ -339,9 +323,6 @@ class parser:
                 holder['mac_dl_bo_irq'] = irq
                 holder['mac_dl_bo_outliers'] = outliers
                     # =================================================
-
-                # holder['MAC_DL_BO_MAX'] = self.get_max(tmp['l2BoMax'])
-                # holder['MAC_DL_BO_MIN'] = self.get_max(tmp['l2BoMin'])
                 holder['stream_sn2']=t['stream_sn2']
                 holder['anomaly']=0
                 data.append(holder)
@@ -352,22 +333,6 @@ class parser:
             return data[0]
         else:
             return -1
-
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        # t=df['size']
-        # t=t/(1024*128)
-        # t.plot(ax=self.axes[0,1])
-        return df
-
     #parse mac rlc size
     def parse_mac_rlc_size(self,json_object):
         self.axes[0,2].set_title('mac_rlc_size')
@@ -416,21 +381,6 @@ class parser:
             return data[0]
         else:
             return -1
-
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['mac_rlc_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[0,2])
-        return df
 
     # parse rlc f1u size
     def parse_rlc_f1u_size(self, json_object):
@@ -483,21 +433,7 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['rlc_f1u_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[1,0])
-        return df
-
+ 
     #parse rlc mac size
     def parse_rlc_mac_size(self,json_object):
         # self.axes[1,1].set_title('rlc_mac_size')
@@ -548,20 +484,6 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['rlc_mac_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[1,1])
-        return df
 
     # parse mhtx
     def parse_mhtx(self, json_object):
@@ -643,25 +565,6 @@ class parser:
             return data[0]
         else:
             return -1
-
-        len(data)
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['MHTX_Out_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[1,2])
-        t=df['MHTX_In_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[1,2])
-        return df
 
     # parse bhtx
     def parse_bhtx(self, json_object):
@@ -754,25 +657,6 @@ class parser:
         else:
             return -1
 
-        len(data)
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['BHTX_Out_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,0])
-        t=df['BHTX_In_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,0])
-        return df
-
     # parse bhrx
     def parse_bhrx(self, json_object):
         # self.axes[2,1].set_title('bhrx_agg')
@@ -854,23 +738,7 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['BHRX_Out_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,1])
-        t=df['BHRX_In_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,1])
-        return df
+
 
     # parse mhrx
     def parse_mhrx(self, json_object):
@@ -956,23 +824,6 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        t=df['MHRX_Out_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,2])
-        t=df['MHRX_In_size']
-        t=t/(1024*128)
-        t.plot(ax=self.axes[2,2])
-        return df
 
 
     # parse fapi dl config
@@ -1019,23 +870,7 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
 
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        return df
 
     # parse mac bsr update
     def parse_mac_bsr_update(self, json_object):
@@ -1078,23 +913,6 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        return df
 
     # parse mac csi update
     def parse_mac_csi_report(self, json_object):
@@ -1237,17 +1055,6 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        return df
 
     # parse mac ul crc ind
     def parse_mac_ul_crc_ind(self, json_object):
@@ -1278,17 +1085,7 @@ class parser:
         else:
             return -1
 
-        df = pd.DataFrame.from_dict(data)
-        df['timestamp'] = df['timestamp'].astype(np.int64)
-        df['timestamp'] = pd.to_datetime(df['timestamp'],unit='ns')
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        return df
+
 
 
     # parse fapi gnb ul config req
@@ -1404,15 +1201,7 @@ class parser:
         #     lambda x: pd.Timestamp.combine(desired_date, x.time())
         # )
         # df['timestamp'] = corrected_timestamp
-        df=df.sort_values(by='timestamp', ascending=True)
-        df.set_index('timestamp', inplace=True)
-        df
-        for i in range(len(self.timestamp)):
-            t=df.between_time(self.timestamp.loc[i]['start_time'].time(), self.timestamp.loc[i]['end_time'].time())['anomaly']
-            for j in range(len(t.index)):
-                df.at[t.index[j],'anomaly']=1
-        df[df['anomaly']==1]
-        return df
+
 
         # parse swtich kpi
         Ethernet_Port_df=pd.DataFrame()
@@ -1483,28 +1272,6 @@ class parser:
         return All_Platform_KPIs_and_Ethernet_Port_df
 
 
-        # Ethernet_Port_df = pd.DataFrame.from_dict(data)
-
-        # Ethernet_Port_df['timestamp'] = pd.to_datetime(Ethernet_Port_df['timestamp'], format='%Y-%m-%dT%H:%M:%S.%fZ')
-
-
-        # Ethernet_Port_df=Ethernet_Port_df.sort_values(by='timestamp', ascending=True)
-
-        # # PTP_df.set_index('timestamp', inplace=True)
-
-        # # Pivot table
-        # Ethernet_Port_pivot_df = pd.pivot_table(Ethernet_Port_df,
-        #                             index='timestamp',
-        #                             columns='name',
-        #                             values=['in_octet_total', 'out_octet_total'])
-
-        # Ethernet_Port_pivot_df.columns = [f"{col[0]}_{col[1]}" for col in Ethernet_Port_pivot_df.columns]
-
-        # # remove the accumlated value
-        # for i in Ethernet_Port_pivot_df.columns:
-        # Ethernet_Port_pivot_df[i] = Ethernet_Port_pivot_df[i].diff(periods=2)
-        # Ethernet_Port_pivot_df[i]*=(8/10) # divide by 10 [s] as we substract two time steps each one with 5 [s]
-        # Ethernet_Port_pivot_df[i]/=1000*1000*1000
     def my_pivot(self,platform_df, col, new_colummn):
         data ={}
         for i in platform_df['Process_And_Thread'].unique():
@@ -1538,7 +1305,8 @@ class parser:
         return  source_table
 
     def parse_json(self, json_dict, json_object):
-        json_object = json.loads(json_object)    
+        
+        # json_object = json.loads(json_object)    
         try:        
             if(json_object['stream_type']=='ebpf'):
                 if(json_object['host_name']=='telco-2'):
@@ -2122,3 +1890,473 @@ class parser:
         if(len(All_Platform_KPIs_df)>0 and len(mgmt)>0):
             platform = self.merge_platform(All_Platform_KPIs_df, mgmt)
             platform.to_csv("platform"+str(count)+".csv")             
+
+
+    
+    def generate_npy(self, count, json_dict):
+        source_table = []
+        #parse platform
+        ebpf = pd.DataFrame()
+        fapi_gnb_ul_config_req = pd.DataFrame()
+        mac_ul_crc_ind = pd.DataFrame()
+        mac_sinr_update = pd.DataFrame()
+        mac_dl_harq = pd.DataFrame()
+        mac_csi_report = pd.DataFrame()
+        mac_bsr_update = pd.DataFrame()
+        fapi_gnb_dl_config_req = pd.DataFrame()
+        mhrx_ps = pd.DataFrame()
+        mhtx_ps = pd.DataFrame()
+        bhtx_ps = pd.DataFrame()
+        bhrx_ps = pd.DataFrame()
+        rlc_mac_size = pd.DataFrame()
+        rlc_f1u_size = pd.DataFrame()
+        mac_rlc_size = pd.DataFrame()
+        mac_dl_bo_update = pd.DataFrame()
+        f1u_rlc_size = pd.DataFrame()
+        mgmt = pd.DataFrame()
+        All_Platform_KPIs_df = pd.DataFrame()
+
+        #parse platform
+
+
+        try:
+            if(json_dict['ebpf']):
+                # pprint.pprint(json_dict['ebpf'])
+                json_dict['ebpf'] = [i for i in json_dict['ebpf'] if i != -1] 
+                # print(len(json_dict['ebpf']))
+                # pprint.pprint(json_dict['ebpf'])
+                ebpf = pd.DataFrame(json_dict['ebpf'])
+                ebpf['timestamp'] = pd.to_datetime(ebpf['timestamp'], format='%H:%M:%S.%f')
+                ebpf=ebpf.sort_values(by='timestamp', ascending=True)
+                ebpf.set_index('timestamp', inplace=True)
+                ebpf = ebpf[~ebpf['thread_name'].str.startswith(('OS swapper', 'kworker', 'stress-ng', 'unknown', 'irq/', 'irq_work', 'ksoftirqd', 'rcuc/'))]
+                ebpf['Process_And_Thread'] = ebpf['process_name'] + '_' + ebpf['thread_name']
+
+                # If you want to reset the index after removing rows
+                ebpf = ebpf.reset_index()
+
+                # Sort by timestamp and Process_And_Thread column
+                ebpf = ebpf.sort_values(by=['timestamp','Process_And_Thread'], ascending=True)
+
+                # df.drop_duplicates(['timestamp', 'Process_And_Thread'], inplace=True)
+
+                # calculate mean, var, std, ....outliers
+                for index, row in ebpf.iterrows():
+                    bin_value = row['bins']
+                # print ('real max:',row['max'])
+                    mean, var ,std, skewness, kurtosis, irq,  outliers = self.calc_platform_hist(bin_value)
+                    ebpf.loc[index, 'mean']= mean
+                    ebpf.loc[index, 'var']= var
+                    ebpf.loc[index, 'std']= std
+                    ebpf.loc[index, 'skewness']= skewness
+                    ebpf.loc[index, 'kurtosis']= kurtosis
+                    ebpf.loc[index, 'irq']= irq
+                    ebpf.loc[index, 'outliers']= outliers
+                    # =========== calc min and Range====================================
+                    i = 0
+                    bin_count = row['bins'][i]
+                    range_start = 2 ** i
+                    range_end = 2 ** (i + 1) - 1
+                    range_size = range_end - range_start + 1
+                    items_per_bin = bin_count / range_size
+                    # Calculate total for this bin using formulas
+                    Min_value = ((range_start + range_end) * range_size/2)*items_per_bin
+                    # print ("range_start, range_end, bin_count, value:",range_start, range_end, bin_count, value)
+                    ebpf.loc[index, 'range'] = row['max_runtime'] - Min_value
+                    # print ("row['max'],  Min_value:",row['max'],  Min_value)
+
+                # ============ calc min ===============================
+
+                # histogram for sum for all threads
+                for index, row in ebpf.iterrows():
+                    bin_value = row['others_runtime_bin']
+                    # print ('real max:',row['max'])
+                    mean, var ,std, skewness, kurtosis, irq,  outliers = self.calc_platform_hist(bin_value)
+                    ebpf.loc[index, 'others_runtime_mean']= mean
+                    ebpf.loc[index, 'others_runtime_var']= var
+                    ebpf.loc[index, 'others_runtime_std']= std
+                    ebpf.loc[index, 'others_runtime_skewness']= skewness
+                    ebpf.loc[index, 'others_runtime_kurtosis']= kurtosis
+                    ebpf.loc[index, 'others_runtime_irq']= irq
+                    ebpf.loc[index, 'others_runtime_outliers']= outliers
+                    # =========== calc min and Range====================================
+                    i = 0
+                    bin_count = row['others_runtime_bin'][i]
+                    range_start = 2 ** i
+                    range_end = 2 ** (i + 1) - 1
+                    range_size = range_end - range_start + 1
+                    items_per_bin = bin_count / range_size
+                    # Calculate total for this bin using formulas
+                    Min_value = ((range_start + range_end) * range_size/2)*items_per_bin
+                    # print ("range_start, range_end, bin_count, value:",range_start, range_end, bin_count, value)
+                    ebpf.loc[index, 'others_runtime_range'] = row['max_runtime'] - Min_value
+
+                platform_mean_df = self.my_pivot(ebpf, 'Process_And_Thread', 'mean')
+                platform_var_df = self.my_pivot(ebpf, 'Process_And_Thread', 'var')
+                platform_std_df = self.my_pivot(ebpf, 'Process_And_Thread', 'std')
+                platform_range_df = self.my_pivot(ebpf, 'Process_And_Thread', 'range')
+                platform_skewness_df = self.my_pivot(ebpf, 'Process_And_Thread', 'skewness')
+                platform_kurtosis_df = self.my_pivot(ebpf, 'Process_And_Thread', 'kurtosis')
+                platform_irq_df = self.my_pivot(ebpf, 'Process_And_Thread', 'irq')
+                platform_outliers_df = self.my_pivot(ebpf, 'Process_And_Thread', 'outliers')
+                platform_others_runtime_mean_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_mean')
+                platform_others_runtime_var_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_var')
+                platform_others_runtime_std_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_std')
+                platform_others_runtime_range_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_range')
+                platform_others_runtime_skewness_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_skewness')
+                platform_others_runtime_kurtosis_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_kurtosis')
+                platform_others_runtime_irq_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_irq')
+                platform_others_runtime_outliers_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_outliers')
+                platform_max_df = self.my_pivot(ebpf, 'Process_And_Thread', 'max')
+                platform_total_events_df = self.my_pivot(ebpf, 'Process_And_Thread', 'total_events')
+                platform_total_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'total_runtime')
+                platform_max_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'max_runtime')
+                platform_others_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime')
+                platform_anomaly_df = self.my_pivot(ebpf, 'Process_And_Thread', 'anomaly')
+                platform_anomaly_df.rename(columns={'gnb_cu_pdcp_0_0_pdcp_master_0_anomaly': 'anomaly'}, inplace=True)
+                All_Platform_KPIs_df = pd.concat([platform_max_df, platform_total_events_df, platform_total_runtime_df,platform_mean_df, platform_range_df,platform_var_df,platform_std_df,platform_skewness_df ,platform_kurtosis_df,platform_irq_df,platform_outliers_df, platform_others_runtime_mean_df, platform_others_runtime_var_df, platform_others_runtime_std_df, platform_others_runtime_range_df, platform_others_runtime_skewness_df, platform_others_runtime_kurtosis_df, platform_others_runtime_irq_df, platform_others_runtime_outliers_df ,platform_max_runtime_df, platform_others_runtime_df, platform_anomaly_df['anomaly']], axis=1)
+                All_Platform_KPIs_df.reset_index(inplace=True)
+                All_Platform_KPIs_df.fillna(0, inplace=True)
+                All_Platform_KPIs_df.rename(columns={'index': 'timestamp'}, inplace=True)
+                # print(len(ebpf))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['ebpf'])
+            # exit(0)
+        
+        #parse fapi_gnb_ul_config_req
+        try:
+            if(json_dict['fapi_gnb_ul_config_req']):
+                fapi_gnb_ul_config_req = pd.DataFrame(json_dict['fapi_gnb_ul_config_req'])
+                fapi_gnb_ul_config_req['timestamp'] = fapi_gnb_ul_config_req['timestamp'].astype(np.int64)
+                # print(len(source_table),len(fapi_gnb_ul_config_req))
+                source_table.extend(fapi_gnb_ul_config_req['timestamp'].tolist())
+                # print(len(source_table))
+                fapi_gnb_ul_config_req['timestamp'] = pd.to_datetime(fapi_gnb_ul_config_req['timestamp'], unit='ns')
+                fapi_gnb_ul_config_req=fapi_gnb_ul_config_req.sort_values(by='timestamp', ascending=True)
+                fapi_gnb_ul_config_req.set_index('timestamp', inplace=True)
+                # print(len(fapi_gnb_ul_config_req))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['fapi_gnb_ul_config_req'])
+            # exit(0)
+        
+        #parse mac_ul_crc_ind
+        try:
+            if(json_dict['mac_ul_crc_ind']):
+                mac_ul_crc_ind = pd.DataFrame(json_dict['mac_ul_crc_ind'])
+                mac_ul_crc_ind['timestamp'] = mac_ul_crc_ind['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_ul_crc_ind))
+                source_table.extend(mac_ul_crc_ind['timestamp'].tolist())
+                # print(len(source_table))
+                mac_ul_crc_ind['timestamp'] = pd.to_datetime(mac_ul_crc_ind['timestamp'], unit='ns')
+                mac_ul_crc_ind=mac_ul_crc_ind.sort_values(by='timestamp', ascending=True)
+                mac_ul_crc_ind.set_index('timestamp', inplace=True)
+                # print(len(mac_ul_crc_ind))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_ul_crc_ind'])
+            # exit(0)
+        
+        #parse mac_sinr_update
+        try:
+            if(json_dict['mac_sinr_update']):
+                mac_sinr_update = pd.DataFrame(json_dict['mac_sinr_update'])
+                mac_sinr_update['timestamp'] = mac_sinr_update['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_sinr_update))
+                source_table.extend(mac_sinr_update['timestamp'].tolist())
+                mac_sinr_update['timestamp'] = pd.to_datetime(mac_sinr_update['timestamp'], unit='ns')
+                mac_sinr_update=mac_sinr_update.sort_values(by='timestamp', ascending=True)
+                mac_sinr_update.set_index('timestamp', inplace=True)
+                # print(len(mac_sinr_update))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_sinr_update'])
+            # exit(0)
+        
+        #parse mac_dl_harq
+        try:
+            if(json_dict['mac_dl_harq']):
+                mac_dl_harq = pd.DataFrame(json_dict['mac_dl_harq'])
+                mac_dl_harq['timestamp'] = mac_dl_harq['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_dl_harq))
+                source_table.extend(mac_dl_harq['timestamp'].tolist())
+                mac_dl_harq['timestamp'] = pd.to_datetime(mac_dl_harq['timestamp'], unit='ns')
+                mac_dl_harq=mac_dl_harq.sort_values(by='timestamp', ascending=True)
+                mac_dl_harq.set_index('timestamp', inplace=True)
+                # print(len(mac_dl_harq))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_dl_harq'])
+            # exit(0)
+        
+        # parse mac_csi_report
+        try:
+            if(json_dict['mac_csi_report']):
+                mac_csi_report = pd.DataFrame(json_dict['mac_csi_report'])
+                mac_csi_report['timestamp'] = mac_csi_report['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_csi_report))
+                source_table.extend(mac_csi_report['timestamp'].tolist())
+                mac_csi_report['timestamp'] = pd.to_datetime(mac_csi_report['timestamp'], unit='ns')
+                mac_csi_report=mac_csi_report.sort_values(by='timestamp', ascending=True)
+                mac_csi_report.set_index('timestamp', inplace=True)
+                # print(len(mac_csi_report))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_csi_report'])
+            # exit(0)
+        
+        # parse mac_bsr_update
+        try:
+            if(json_dict['mac_bsr_update']):
+                mac_bsr_update = pd.DataFrame(json_dict['mac_bsr_update'])
+                mac_bsr_update['timestamp'] = mac_bsr_update['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_bsr_update))
+                source_table.extend(mac_bsr_update['timestamp'].tolist())
+                mac_bsr_update['timestamp'] = pd.to_datetime(mac_bsr_update['timestamp'], unit='ns')
+                mac_bsr_update=mac_bsr_update.sort_values(by='timestamp', ascending=True)
+                mac_bsr_update.set_index('timestamp', inplace=True)
+                # print(len(mac_bsr_update))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_bsr_update'])
+            # exit(0)
+        
+        # parse fapi_gnb_dl_config_req
+        try:
+            if(json_dict['fapi_gnb_dl_config_req']):
+                fapi_gnb_dl_config_req = pd.DataFrame(json_dict['fapi_gnb_dl_config_req'])
+                fapi_gnb_dl_config_req['timestamp'] = fapi_gnb_dl_config_req['timestamp'].astype(np.int64)
+                # print(len(source_table),len(fapi_gnb_dl_config_req))
+                source_table.extend(fapi_gnb_dl_config_req['timestamp'].tolist())
+                fapi_gnb_dl_config_req['timestamp'] = pd.to_datetime(fapi_gnb_dl_config_req['timestamp'], unit='ns')
+                fapi_gnb_dl_config_req=fapi_gnb_dl_config_req.sort_values(by='timestamp', ascending=True)
+                fapi_gnb_dl_config_req.set_index('timestamp', inplace=True)
+                # print(len(fapi_gnb_dl_config_req))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['fapi_gnb_dl_config_req'])
+            # exit(0)
+        # parse mhrx_ps
+        try:
+            if(json_dict['mhrx_ps']):
+
+                mhrx_ps = pd.DataFrame(json_dict['mhrx_ps'])
+                mhrx_ps['timestamp'] = mhrx_ps['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mhrx_ps))
+                source_table.extend(mhrx_ps['timestamp'].tolist())
+                mhrx_ps['timestamp'] = pd.to_datetime(mhrx_ps['timestamp'], unit='ns')
+                mhrx_ps=mhrx_ps.sort_values(by='timestamp', ascending=True)
+                mhrx_ps.set_index('timestamp', inplace=True)
+                # print(len(mhrx_ps))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mhrx_ps'])
+            # exit(0)
+        # parse mhtx_ps
+        try:
+            if(json_dict['mhtx_ps']):
+                mhtx_ps = pd.DataFrame(json_dict['mhtx_ps'])
+                mhtx_ps['timestamp'] = mhtx_ps['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mhtx_ps))
+                source_table.extend(mhtx_ps['timestamp'].tolist())
+                mhtx_ps['timestamp'] = pd.to_datetime(mhtx_ps['timestamp'], unit='ns')
+                mhtx_ps=mhtx_ps.sort_values(by='timestamp', ascending=True)
+                mhtx_ps.set_index('timestamp', inplace=True)
+                # print(len(mhtx_ps))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mhtx_ps'])
+            # exit(0)
+        # parse bhtx_ps
+        try:
+            if(json_dict['bhtx_ps']):
+                bhtx_ps = pd.DataFrame(json_dict['bhtx_ps'])
+                bhtx_ps['timestamp'] = bhtx_ps['timestamp'].astype(np.int64)
+                # print(len(source_table),len(bhtx_ps))
+                source_table.extend(bhtx_ps['timestamp'].tolist())
+                bhtx_ps['timestamp'] = pd.to_datetime(bhtx_ps['timestamp'], unit='ns')
+                bhtx_ps=bhtx_ps.sort_values(by='timestamp', ascending=True)
+                bhtx_ps.set_index('timestamp', inplace=True)
+                # print(len(bhtx_ps))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['bhtx_ps'])
+            # exit(0)
+        
+        # parse bhrx_ps
+        try:
+            if(json_dict['bhrx_ps']):
+                bhrx_ps = pd.DataFrame(json_dict['bhrx_ps'])
+                bhrx_ps['timestamp'] = bhrx_ps['timestamp'].astype(np.int64)
+                # print(len(source_table),len(bhrx_ps))
+                source_table.extend(bhrx_ps['timestamp'].tolist())
+                bhrx_ps['timestamp'] = pd.to_datetime(bhrx_ps['timestamp'], unit='ns')
+                bhrx_ps=bhrx_ps.sort_values(by='timestamp', ascending=True)
+                bhrx_ps.set_index('timestamp', inplace=True)
+                # print(len(bhrx_ps))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['bhrx_ps'])
+            # exit(0)
+
+        # parse rlc_mac_size
+        try:
+            if(json_dict['rlc_mac_size']):
+                rlc_mac_size = pd.DataFrame(json_dict['rlc_mac_size'])
+                rlc_mac_size['timestamp'] = rlc_mac_size['timestamp'].astype(np.int64)
+                # print(len(source_table),len(rlc_mac_size))
+                source_table.extend(rlc_mac_size['timestamp'].tolist())
+                rlc_mac_size['timestamp'] = pd.to_datetime(rlc_mac_size['timestamp'], unit='ns')
+                rlc_mac_size=rlc_mac_size.sort_values(by='timestamp', ascending=True)
+                rlc_mac_size.set_index('timestamp', inplace=True)
+                # print(len(rlc_mac_size))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['rlc_mac_size'])
+            # exit(0)
+        
+        # parse rlc_f1u_size
+        try:
+            if(json_dict['rlc_f1u_size']):
+                rlc_f1u_size = pd.DataFrame(json_dict['rlc_f1u_size'])
+                rlc_f1u_size['timestamp'] = rlc_f1u_size['timestamp'].astype(np.int64)
+                # print(len(source_table),len(rlc_f1u_size))
+                source_table.extend(rlc_f1u_size['timestamp'].tolist())
+                rlc_f1u_size['timestamp'] = pd.to_datetime(rlc_f1u_size['timestamp'], unit='ns')
+                rlc_f1u_size=rlc_f1u_size.sort_values(by='timestamp', ascending=True)
+                rlc_f1u_size.set_index('timestamp', inplace=True)
+                # print(len(rlc_f1u_size))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['rlc_f1u_size'])
+            # exit(0)
+
+        # parse mac_rlc_size
+        try:
+            if(json_dict['mac_rlc_size']):
+                mac_rlc_size = pd.DataFrame(json_dict['mac_rlc_size'])
+                mac_rlc_size['timestamp'] = mac_rlc_size['timestamp'].astype(np.int64)
+                # print(len(source_table),len(mac_rlc_size))
+                source_table.extend(mac_rlc_size['timestamp'].tolist())
+                mac_rlc_size['timestamp'] = pd.to_datetime(mac_rlc_size['timestamp'], unit='ns')
+                mac_rlc_size=mac_rlc_size.sort_values(by='timestamp', ascending=True)
+                mac_rlc_size.set_index('timestamp', inplace=True)
+                # print(len(mac_rlc_size))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_rlc_size'])
+            # exit(0)
+        # parse mac_dl_bo_update
+        try:
+            if(json_dict['mac_dl_bo_update']):
+                mac_dl_bo_update = pd.DataFrame(json_dict['mac_dl_bo_update'])
+                # print(len(source_table),len(mac_dl_bo_update))
+                source_table.extend(mac_dl_bo_update['timestamp'].tolist())
+                mac_dl_bo_update['timestamp'] = mac_dl_bo_update['timestamp'].astype(np.int64)
+                mac_dl_bo_update['timestamp'] = pd.to_datetime(mac_dl_bo_update['timestamp'], unit='ns')
+                mac_dl_bo_update=mac_dl_bo_update.sort_values(by='timestamp', ascending=True)
+                mac_dl_bo_update.set_index('timestamp', inplace=True)
+                # print(len(mac_dl_bo_update))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['mac_dl_bo_update'])
+            # exit(0)
+
+        # parse f1u_rlc_size
+        try:
+            if(json_dict['f1u_rlc_size']):
+                f1u_rlc_size = pd.DataFrame(json_dict['f1u_rlc_size'])
+                f1u_rlc_size['timestamp'] = f1u_rlc_size['timestamp'].astype(np.int64)
+                # print(len(source_table),len(f1u_rlc_size))
+                source_table.extend(f1u_rlc_size['timestamp'].tolist())
+                f1u_rlc_size['timestamp'] = pd.to_datetime(f1u_rlc_size['timestamp'], unit='ns')
+                f1u_rlc_size=f1u_rlc_size.sort_values(by='timestamp', ascending=True)
+                f1u_rlc_size.set_index('timestamp', inplace=True)
+                # print(len(f1u_rlc_size))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['f1u_rlc_size'])
+            # exit(0)
+        
+        # parse 5gmgmt
+        try:
+            if(json_dict['5gmgmt']):
+                json_dict['5gmgmt'] = [i for i in json_dict['5gmgmt'] if i != -1] 
+                mgmt = pd.DataFrame(json_dict['5gmgmt'])
+                mgmt['timestamp'] = pd.to_datetime(mgmt['timestamp'], format='%Y-%m-%dT%H:%M:%S.%fZ')
+                mgmt=mgmt.sort_values(by='timestamp', ascending=True)
+                mgmt.set_index('timestamp', inplace=True)
+
+                mgmt =pd.pivot_table(mgmt,
+                    index='timestamp',
+                    columns='name',
+                    values=['in_octet_total', 'out_octet_total'])
+                mgmt.columns = [f"{col[0]}_{col[1]}" for col in mgmt.columns]
+                for i in mgmt.columns:
+                    mgmt[i] = mgmt[i].diff(periods=2)
+                    mgmt[i]*=(8/10) # divide by 10 [s] as we substract two time steps each one with 5 [s]
+                    mgmt[i]/=1000*1000*1000
+                mgmt = mgmt.reset_index(drop=False)
+                
+                
+                # print(len(mgmt))
+        except KeyError:
+            pass
+            # pprint.pprint(json_dict['5gmgmt'])
+            # exit(0)
+        # print(len(ebpf), len(fapi_gnb_ul_config_req), len(mac_ul_crc_ind), len(mac_sinr_update), len(mac_dl_harq), len(mac_csi_report), len(mac_bsr_update), len(fapi_gnb_dl_config_req), len(mhrx_ps), len(mhtx_ps), len(bhtx_ps), len(bhrx_ps), len(rlc_mac_size), len(rlc_f1u_size), len(mac_rlc_size), len(mac_dl_bo_update), len(f1u_rlc_size), len(mgmt))
+        # print(len(source_table))
+        source_table = list(set(source_table))
+        
+        source_table = pd.DataFrame(source_table, columns=['timestamp'])
+        source_table['timestamp'] = source_table['timestamp'].astype(np.int64)
+        source_table['timestamp'] = pd.to_datetime(source_table['timestamp'], unit='ns')
+        source_table=source_table.sort_values(by='timestamp', ascending=True)
+        # print(source_table)
+        source_table = self.merge_tables(source_table, bhtx_ps[bhtx_ps['BHTX_In_size'].notna()].filter(regex='^BHTX_In_'),'BHTX_In_size')
+        source_table = self.merge_tables(source_table, bhtx_ps[bhtx_ps['BHTX_Out_size'].notna()].filter(regex='^BHTX_Out_'),'BHTX_Out_size')
+        source_table = self.merge_tables(source_table, bhrx_ps[bhrx_ps['BHRX_In_size'].notna()].filter(regex='^BHRX_In_'),'BHRX_In_size')
+        source_table = self.merge_tables(source_table, bhrx_ps[bhrx_ps['BHRX_Out_size'].notna()].filter(regex='^BHRX_Out_'),'BHRX_Out_size')
+
+        source_table = self.merge_tables(source_table, mhtx_ps[mhtx_ps['MHTX_In_size'].notna()].filter(regex='^MHTX_In_'),'MHTX_In_size')
+        source_table = self.merge_tables(source_table, mhtx_ps[mhtx_ps['MHTX_Out_size'].notna()].filter(regex='^MHTX_Out_'),'MHTX_Out_size')
+        source_table = self.merge_tables(source_table, mhrx_ps[mhrx_ps['MHRX_In_size'].notna()].filter(regex='^MHRX_In_'),'MHRX_In_size')
+        source_table = self.merge_tables(source_table, mhrx_ps[mhrx_ps['MHRX_Out_size'].notna()].filter(regex='^MHRX_Out_'),'MHRX_Out_size')
+
+        source_table = self.merge_tables(source_table, f1u_rlc_size[f1u_rlc_size['f1u_rlc_size'].notna()].filter(regex='^f1u_rlc_'),'f1u_rlc_size')
+
+        source_table = self.merge_tables(source_table, rlc_f1u_size[rlc_f1u_size['rlc_f1u_size'].notna()].filter(regex='^rlc_f1u_'),'rlc_f1u_size')
+        source_table = self.merge_tables(source_table, rlc_mac_size[rlc_mac_size['rlc_mac_size'].notna()].filter(regex='^rlc_mac_'),'rlc_mac_size')
+        source_table = self.merge_tables(source_table, mac_rlc_size[mac_rlc_size['mac_rlc_size'].notna()].filter(regex='^mac_rlc_'),'mac_rlc_size')
+        source_table = self.merge_tables(source_table, mac_bsr_update[mac_bsr_update['mac_bsr_update_max'].notna()].filter(regex='^mac_bsr_update_'),'mac_bsr_update_max')
+        source_table = self.merge_tables(source_table, mac_csi_report[mac_csi_report['mac_csi_report_max'].notna()].filter(regex='^mac_csi_report_'),'mac_csi_report_max')
+        source_table = self.merge_tables(source_table, mac_dl_harq[mac_dl_harq['mac_dl_harq_total'].notna()].filter(regex='^mac_dl_harq_'),'mac_dl_harq_total')
+        source_table = self.merge_tables(source_table, mac_sinr_update[mac_sinr_update['mac_sinr_update_max'].notna()].filter(regex='^mac_sinr_update_'),'mac_sinr_update_max')
+        source_table = self.merge_tables(source_table, mac_ul_crc_ind[mac_ul_crc_ind['mac_ul_CRC_Max'].notna()].filter(regex='^mac_ul_CRC_'),'mac_ul_CRC_Max')
+        source_table = self.merge_tables(source_table, fapi_gnb_dl_config_req[fapi_gnb_dl_config_req['l1_tx'].notna()].filter(regex='^l1_'),'l1_tx')
+        source_table = self.merge_tables(source_table, fapi_gnb_ul_config_req[fapi_gnb_ul_config_req['l1_UL_tx'].notna()].filter(regex='^l1_'),'l1_UL_tx')
+        source_table = self.merge_tables(source_table, mac_dl_bo_update[mac_dl_bo_update['mac_dl_bo_max'].notna()].filter(regex='^mac_dl_bo_'),'mac_dl_bo_max')
+        
+        source_table.set_index('timestamp', inplace=True)
+        source_table['anomaly'] = 0
+
+        source_table.fillna(0, inplace=True)
+        source_table=source_table.iloc[:,1:-142]
+        npdata = source_table.to_numpy()
+        print(npdata.shape)
+        qdata = npdata**0.2
+        
+        qdata = qdata[npdata.shape[0]%64:,:]
+        qdata = qdata.reshape((-1,64,64))
+        for i in range(qdata.shape[2]):
+            qdata[:,:,i] = qdata[:,:,45]
+        print(qdata.shape)
+        print(qdata.max())
+        np.save('radio'+str(count)+'.npy', qdata/22.8)
+
+        
+        # source_table.to_csv("radio"+str(count)+".csv")
+        # if(len(All_Platform_KPIs_df)>0 and len(mgmt)>0):
+        #     platform = self.merge_platform(All_Platform_KPIs_df, mgmt)
+        #     platform.to_csv("platform"+str(count)+".csv")             
