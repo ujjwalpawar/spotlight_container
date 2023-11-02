@@ -1424,7 +1424,8 @@ class parser:
                     json_dict['f1u_rlc_size'].append(self.parse_f1u_rlc_size(json_object))
                 except:
                     json_dict['f1u_rlc_size'] = []
-                    json_dict['f1u_rlc_size'].append(self.parse_f1u_rlc_size(json_object)) 
+                    json_dict['f1u_rlc_size'].append(self.parse_f1u_rlc_size(json_object))
+                     
             else:
                 pass
         except KeyError:
@@ -1508,7 +1509,7 @@ class parser:
                     # print ("range_start, range_end, bin_count, value:",range_start, range_end, bin_count, value)
                     ebpf.loc[index, 'range'] = row['max_runtime'] - Min_value
                     # print ("row['max'],  Min_value:",row['max'],  Min_value)
-
+                # print(len(ebpf))
                 # ============ calc min ===============================
 
                 # histogram for sum for all threads
@@ -1534,35 +1535,90 @@ class parser:
                     Min_value = ((range_start + range_end) * range_size/2)*items_per_bin
                     # print ("range_start, range_end, bin_count, value:",range_start, range_end, bin_count, value)
                     ebpf.loc[index, 'others_runtime_range'] = row['max_runtime'] - Min_value
-
+                # print(len(ebpf))
+                df_list = []
                 platform_mean_df = self.my_pivot(ebpf, 'Process_And_Thread', 'mean')
+                # print(len(platform_mean_df))
+                df_list.append(platform_mean_df)
                 platform_var_df = self.my_pivot(ebpf, 'Process_And_Thread', 'var')
+                # print(len(platform_var_df))
+                df_list.append(platform_var_df)
                 platform_std_df = self.my_pivot(ebpf, 'Process_And_Thread', 'std')
+                # print(len(platform_std_df))
+                df_list.append(platform_std_df)
                 platform_range_df = self.my_pivot(ebpf, 'Process_And_Thread', 'range')
+                # print(len(platform_range_df))
+                df_list.append(platform_range_df)
                 platform_skewness_df = self.my_pivot(ebpf, 'Process_And_Thread', 'skewness')
+                # print(len(platform_skewness_df))
+                df_list.append(platform_skewness_df)
                 platform_kurtosis_df = self.my_pivot(ebpf, 'Process_And_Thread', 'kurtosis')
+                # print(len(platform_kurtosis_df))
+                df_list.append(platform_kurtosis_df)
                 platform_irq_df = self.my_pivot(ebpf, 'Process_And_Thread', 'irq')
+                # print(len(platform_irq_df))
+                df_list.append(platform_irq_df)
                 platform_outliers_df = self.my_pivot(ebpf, 'Process_And_Thread', 'outliers')
+                # print(len(platform_outliers_df))
+                df_list.append(platform_outliers_df)
                 platform_others_runtime_mean_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_mean')
+                # print(len(platform_others_runtime_mean_df))
+                df_list.append(platform_others_runtime_mean_df)
                 platform_others_runtime_var_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_var')
+                # print(len(platform_others_runtime_var_df))
+                df_list.append(platform_others_runtime_var_df)
+            
                 platform_others_runtime_std_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_std')
+                # print(len(platform_others_runtime_std_df))
+                df_list.append(platform_others_runtime_std_df)
                 platform_others_runtime_range_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_range')
+                # print(len(platform_others_runtime_range_df))
+                df_list.append(platform_others_runtime_range_df)
                 platform_others_runtime_skewness_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_skewness')
+                # print(len(platform_others_runtime_skewness_df))
+                df_list.append(platform_others_runtime_skewness_df)
                 platform_others_runtime_kurtosis_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_kurtosis')
+                # print(len(platform_others_runtime_kurtosis_df))
+                df_list.append(platform_others_runtime_kurtosis_df)
                 platform_others_runtime_irq_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_irq')
+                # print(len(platform_others_runtime_irq_df))  
+                df_list.append(platform_others_runtime_irq_df)
                 platform_others_runtime_outliers_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime_outliers')
+                # print(len(platform_others_runtime_outliers_df))
+                df_list.append(platform_others_runtime_outliers_df)
+
                 platform_max_df = self.my_pivot(ebpf, 'Process_And_Thread', 'max')
+                # print(len(platform_max_df))
+                df_list.append(platform_max_df)
                 platform_total_events_df = self.my_pivot(ebpf, 'Process_And_Thread', 'total_events')
+                # print(len(platform_total_events_df))
+                df_list.append(platform_total_events_df)
                 platform_total_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'total_runtime')
+                # print(len(platform_total_runtime_df))
+                df_list.append(platform_total_runtime_df)
                 platform_max_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'max_runtime')
+                # print(len(platform_max_runtime_df))
+                df_list.append(platform_max_runtime_df)
                 platform_others_runtime_df = self.my_pivot(ebpf, 'Process_And_Thread', 'others_runtime')
+                # print(len(platform_others_runtime_df))
+                df_list.append(platform_others_runtime_df)
                 platform_anomaly_df = self.my_pivot(ebpf, 'Process_And_Thread', 'anomaly')
+                # print(len(platform_anomaly_df))
+                df_list.append(platform_anomaly_df)
                 platform_anomaly_df.rename(columns={'gnb_cu_pdcp_0_0_pdcp_master_0_anomaly': 'anomaly'}, inplace=True)
-                All_Platform_KPIs_df = pd.concat([platform_max_df, platform_total_events_df, platform_total_runtime_df,platform_mean_df, platform_range_df,platform_var_df,platform_std_df,platform_skewness_df ,platform_kurtosis_df,platform_irq_df,platform_outliers_df, platform_others_runtime_mean_df, platform_others_runtime_var_df, platform_others_runtime_std_df, platform_others_runtime_range_df, platform_others_runtime_skewness_df, platform_others_runtime_kurtosis_df, platform_others_runtime_irq_df, platform_others_runtime_outliers_df ,platform_max_runtime_df, platform_others_runtime_df, platform_anomaly_df['anomaly']], axis=1)
+                # print("all parsed") 
+                # print(platform_others_runtime_df.columns)
+                # print(len(df_list))
+
+                # df_list = [platform_max_df, platform_total_events_df, platform_total_runtime_df,platform_mean_df, platform_range_df,platform_var_df,platform_std_df,platform_skewness_df ,platform_kurtosis_df,platform_irq_df,platform_outliers_df, platform_others_runtime_mean_df, platform_others_runtime_var_df, platform_others_runtime_std_df, platform_others_runtime_range_df, platform_others_runtime_skewness_df, platform_others_runtime_kurtosis_df, platform_others_runtime_irq_df, platform_others_runtime_outliers_df ,platform_max_runtime_df, platform_others_runtime_df, platform_anomaly_df['anomaly']]
+                # print(len(df_list))
+                All_Platform_KPIs_df = pd.concat(df_list , axis=1)
+                # print(len(All_Platform_KPIs_df))
                 All_Platform_KPIs_df.reset_index(inplace=True)
                 All_Platform_KPIs_df.fillna(0, inplace=True)
                 All_Platform_KPIs_df.rename(columns={'index': 'timestamp'}, inplace=True)
                 # print(len(ebpf))
+                # print(len(All_Platform_KPIs_df))  
         except KeyError:
             pass
             # pprint.pprint(json_dict['ebpf'])
@@ -1887,6 +1943,7 @@ class parser:
 
         source_table.fillna(0, inplace=True)
         source_table.to_csv("radio"+str(count)+".csv")
+        print(len(All_Platform_KPIs_df), len(mgmt))
         if(len(All_Platform_KPIs_df)>0 and len(mgmt)>0):
             platform = self.merge_platform(All_Platform_KPIs_df, mgmt)
             platform.to_csv("platform"+str(count)+".csv")             

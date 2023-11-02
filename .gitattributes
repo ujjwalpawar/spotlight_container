@@ -1,2 +1,4 @@
 test_cases filter=lfs diff=lfs merge=lfs -text
 input filter=lfs diff=lfs merge=lfs -text
+radio0.csv filter=lfs diff=lfs merge=lfs -text
+platform0.csv filter=lfs diff=lfs merge=lfs -text
