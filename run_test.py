@@ -3,8 +3,9 @@ import json_parser
 import pprint 
 count = 0
 parser = json_parser.parser()
+INPUT = './test_cases/test_case3/input'
 json_dict = {}
-with open('./test_cases/test_case3/input', 'r') as file:
+with open(INPUT, 'r') as file:
     json_objects = file.read().splitlines()
 
 for json_object in json_objects:
