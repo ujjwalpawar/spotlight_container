@@ -12,5 +12,4 @@ for json_object in json_objects:
     json_object = json.loads(json_object)
     parser.parse_json(json_dict,json_object)
 json_dict = {key: list(filter(lambda x: x != -1, value)) for key, value in json_dict.items()}
-print(json_dict['ebpf'])
 parser.generate_csv(count,json_dict)
