@@ -1,5 +1,5 @@
 # spotlight_container
-* run_test.py dan generate sample output; INPUT field inside this script takes input file location.
+* run_test.py to generate sample output; INPUT field inside this script takes input file location.
 
 * This contains dockerfile to create edge container. Dockerfile exposes one port(12345) that can be used to send json. <br /> 
 * Currently, the receiver script inside the container doesn't starts automatically. RUN python3 edge_queue.py to start the receiver. <br /> 
