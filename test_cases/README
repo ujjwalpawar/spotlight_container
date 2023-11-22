@@ -1,2 +1,5 @@
 
 ### Contains three test cases. Case has two output one for platform KPI and one for radio KPI
+
+* Test case 4 is 5 UE with no anomaly
+* Test case 5 is pdcp thread contention with single UE (anomaly column for this output also has labels)
